@@ -46,12 +46,32 @@ public class UserMenu {
 	public void menu2() {
 		try {
 			String SQL;
-			SQL="SELECT Area FROM Area ORDER BY Patient";
+			
+			SQL="SELECT ID FROM DB2022_MedicalCenter WHERE CURTIME() between open and close;";
 			rs=st.executeQuery(SQL);
 			while(rs.next())
 			{
-				System.out.println(rs.getString("Area"));
+				System.out.println(rs.getString("ID"));
+			}
 		}
+		catch(Exception e) {
+			System.out.println("데이터베이스 검색 오류: "+e.getMessage());
+		}
+	}
+	//6 -지역별로 전염병당 감염자 수
+	public void menu6_c() {
+		try {
+			String SQL;
+			
+			SQL="SELECT area, Ebola, Corona, Mers, Sars FROM DB2022_EpidemicRank;";
+			rs=st.executeQuery(SQL);
+			System.out.println("area\t\t Ebola\t Corona\t Mers\t Sars");
+			while(rs.next())
+			{
+				System.out.println(rs.getString("area") +"  \t" + rs.getString("Ebola") +
+				"\t" + rs.getString("Corona") + "\t" + rs.getString("Mers") 
+				+ "\t" +rs.getString("Sars"));
+			}
 		}
 		catch(Exception e) {
 			System.out.println("데이터베이스 검색 오류: "+e.getMessage());
